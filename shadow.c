@@ -10,7 +10,17 @@
 
 #include <shadow.h>
 #include "ruby.h"
+#ifdef RUBY19
+#include <ruby/io.h>
+#else
 #include "rubyio.h"
+#endif
+
+#ifdef RUBY19
+#define file_ptr(x) (x)->stdio_file
+#else
+#define file_ptr(x) (x)->f
+#endif
 
 static VALUE rb_mShadow;
 static VALUE rb_mPasswd;
@@ -74,7 +84,7 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
   if( TYPE(file) != T_FILE )
     rb_raise(rb_eTypeError,"argument must be a File.");
 
-  entry = fgetspent((RFILE(file)->fptr)->f);
+  entry = fgetspent( file_ptr( (RFILE(file)->fptr) ) );
 
   if( entry == NULL )
     return Qnil;
@@ -157,8 +167,8 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
   int result;
 
   for(i=0; i<=8; i++)
-    val[i] = RSTRUCT(entry)->ptr[i];
-  cfile = RFILE(file)->fptr->f;
+    val[i] = RSTRUCT_PTR( entry )[i]; //val[i] = RSTRUCT(entry)->ptr[i];
+  cfile = file_pr( RFILE(file)->fptr );
 
   centry.sp_namp = STR2CSTR(val[0]);
   centry.sp_pwdp = STR2CSTR(val[1]);

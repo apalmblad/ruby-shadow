@@ -70,7 +70,7 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
 		      INT2FIX(entry->sp_inact),
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
-		      0);
+		      NULL);
   free(entry);
   return result;
 };
@@ -99,7 +99,7 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
 		      INT2FIX(entry->sp_inact),
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
-		      0);
+		      NULL);
   return result;
 };
 
@@ -124,7 +124,7 @@ rb_shadow_getspent(VALUE self)
 		      INT2FIX(entry->sp_inact),
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
-		      0);
+		      NULL);
   return result;
 };
 
@@ -152,7 +152,7 @@ rb_shadow_getspnam(VALUE self, VALUE name)
 		      INT2FIX(entry->sp_inact),
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
-		      0);
+		      NULL);
   return result;
 };
 
@@ -264,10 +264,10 @@ Init_shadow()
   rb_sPasswdEntry = rb_struct_define("PasswdEntry",
 				     "sp_namp","sp_pwdp","sp_lstchg",
 				     "sp_min","sp_max","sp_warn",
-				     "sp_inact","sp_expire","sp_flag",0);
+				     "sp_inact","sp_expire","sp_flag", NULL);
   rb_sGroupEntry = rb_struct_define("GroupEntry",
 				    "sg_name","sg_passwd",
-				    "sg_adm","sg_mem",0);
+				    "sg_adm","sg_mem",NULL);
 
   rb_mShadow = rb_define_module("Shadow");
   rb_eFileLock = rb_define_class_under(rb_mShadow,"FileLock",rb_eException);

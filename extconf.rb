@@ -6,8 +6,9 @@
 
 require 'mkmf'
 
-$CFLAGS = ""
-$LDFLAGS = "-lshadow"
+$CFLAGS = RUBY_VERSION =~ /1\.9/ ? '-DRUBY19' : ''
+
+#$LDFLAGS = "-lshadow"
 
 if( ! (ok = have_library("shadow","getspent")) )
   $LDFLAGS = ""

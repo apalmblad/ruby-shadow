@@ -1,3 +1,13 @@
+[2011/01/27]
+* Version 2.1
+    - Ian Marlier <imarlier@brightcove.com>: Make ruby-shadow compile under Ruby 1.9.2
+        * STR2CSTR macro was removed in Ruby 1.9.2, after being deprecated in Ruby 1.8.  Change
+          to StringValuePtr() in its place.
+
+[2010/07/27]
+* Version 2.0
+    - Adam Palmblad <>: Make ruby-shadow compile under Ruby 1.9
+
 [1999/08/18]
 * version 1.4.1
   - extconf.rb supports glibc2(libc6).

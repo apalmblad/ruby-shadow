@@ -55,7 +55,7 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
   if( TYPE(str) != T_STRING )
     rb_raise(rb_eException,"argument must be a string.");
 
-  entry = sgetspent(STR2CSTR(str));
+  entry = sgetspent(StringValuePtr(str));
 
   if( entry == NULL )
     return Qnil;
@@ -137,7 +137,7 @@ rb_shadow_getspnam(VALUE self, VALUE name)
   if( TYPE(name) != T_STRING )
     rb_raise(rb_eException,"argument must be a string.");
 
-  entry = getspnam(STR2CSTR(name));
+  entry = getspnam(StringValuePtr(name));
 
   if( entry == NULL )
     return Qnil;
@@ -170,8 +170,8 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
     val[i] = RSTRUCT_PTR( entry )[i]; //val[i] = RSTRUCT(entry)->ptr[i];
   cfile = file_pr( RFILE(file)->fptr );
 
-  centry.sp_namp = STR2CSTR(val[0]);
-  centry.sp_pwdp = STR2CSTR(val[1]);
+  centry.sp_namp = StringValuePtr(val[0]);
+  centry.sp_pwdp = StringValuePtr(val[1]);
   centry.sp_lstchg = FIX2INT(val[2]);
   centry.sp_min = FIX2INT(val[3]);
   centry.sp_max = FIX2INT(val[4]);

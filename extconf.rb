@@ -15,7 +15,6 @@ if( ! (ok = have_library("shadow","getspent")) )
   ok = have_func("getspent")
 end
 
-ok &= have_func("sgetspent")
 ok &= have_func("fgetspent")
 ok &= have_func("setspent")
 ok &= have_func("endspent")
@@ -23,5 +22,8 @@ ok &= have_func("lckpwdf")
 ok &= have_func("ulckpwdf")
 
 if ok
+  if !have_func("sgetspent")
+    $CFLAGS += ' -DSOLARIS'
+  end
   create_makefile("shadow")
 end

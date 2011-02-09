@@ -1,4 +1,9 @@
 [2011/02/08]
+* Version 2.1.2
+ -  Jeff Blaine <>, Adam Palmblad <adam.palmblad@teampages.com>:
+   Fix issues with compiling against Solaris.  Apparently solaris does not offer sgetspent
+ compiling against ruby 1.8; fixes were made to the ruby header path.
+[2011/02/08]
 * Version 2.1.1
  -  Eric Hankins <ssilver@stormsilver.net>: Looks like there was a minor bug in
  compiling against ruby 1.8; fixes were made to the ruby header path.

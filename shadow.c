@@ -46,6 +46,7 @@ rb_shadow_endspent(VALUE self)
 };
 
 
+#ifndef SOLARIS
 static VALUE
 rb_shadow_sgetspent(VALUE self, VALUE str)
 {
@@ -74,6 +75,7 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
   free(entry);
   return result;
 };
+#endif
 
 static VALUE
 rb_shadow_fgetspent(VALUE self, VALUE file)
@@ -278,7 +280,9 @@ Init_shadow()
 
   rb_define_module_function(rb_mPasswd,"setspent",rb_shadow_setspent,0);
   rb_define_module_function(rb_mPasswd,"endspent",rb_shadow_endspent,0);
+  #ifndef SOLARIS
   rb_define_module_function(rb_mPasswd,"sgetspent",rb_shadow_sgetspent,1);
+  #endif
   rb_define_module_function(rb_mPasswd,"fgetspent",rb_shadow_fgetspent,1);
   rb_define_module_function(rb_mPasswd,"getspent",rb_shadow_getspent,0);
   rb_define_module_function(rb_mPasswd,"getspnam",rb_shadow_getspnam,1);

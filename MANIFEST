@@ -1,7 +1,8 @@
+depend
+extconf.rb
 HISTORY
 MANIFEST
 README
 README.euc
-depend
-extconf.rb
+ruby-shadow.gemspec
 shadow.c

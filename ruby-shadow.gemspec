@@ -5,7 +5,10 @@ Gem::Specification.new do |spec|
   spec.description           = 'This module provides access to shadow passwords on Linux and Solaris'
   spec.email                 = ['adam.palmblad@teampages.com']
   spec.extensions            = ['extconf.rb']
-  spec.files                 = ['HISTORY', 'MANIFEST', 'README', 'README.euc', 'shadow.c']
+  spec.files                 = []
+  File.open('MANIFEST').each { |file|
+    spec.files              << file.chomp
+  }
   spec.homepage              = 'https://github.com/apalmblad/ruby-shadow'
 	spec.name                  = 'ruby-shadow'
 	spec.required_ruby_version = '>= 1.8'

@@ -1,4 +1,7 @@
-[2012/03/15]
+[2012/04/17]
+* Version 2.1.4
+ - MATSUU Takuto <matsuu@gentoo.org>
+  Change obsolete C function to its proper replacement. 
 * Version 2.1.3
  - MATSUU Takuto <matsuu@gentoo.org>
  Fix a typo in the C code for rb_shadow_putspent.  Typo has been present since

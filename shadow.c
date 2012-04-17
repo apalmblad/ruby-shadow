@@ -209,7 +209,7 @@ rb_shadow_lock(VALUE self)
 {
   int result;
 
-  if( rb_iterator_p() ){
+  if( rb_block_given_p() ){
     result = lckpwdf();
     if( result == -1 ){
       rb_raise(rb_eFileLock,"password file was locked");

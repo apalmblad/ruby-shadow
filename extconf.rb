@@ -26,4 +26,15 @@ if ok
     $CFLAGS += ' -DSOLARIS'
   end
   create_makefile("shadow")
+else
+  osx_ok = have_func( "endpwent" )
+  osx_ok &= have_func( "getpwent" )
+  osx_ok &= have_func( "getpwnam" )
+  osx_ok &= have_func( "getpwnam_r" )
+  osx_ok &= have_func( "getpwuid" )
+  osx_ok &= have_func( "setpassent" )
+  osx_ok &= have_func( "setpwent" )
+  if osx_ok
+    raise "It looks like you're on OSX.  There is a branch that might help here: https://github.com/apalmblad/ruby-shadow/tree/osx"
+  end
 end

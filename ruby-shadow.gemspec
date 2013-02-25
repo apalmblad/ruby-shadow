@@ -17,8 +17,8 @@ Gem::Specification.new do |spec|
   end
   spec.homepage              = 'https://github.com/apalmblad/ruby-shadow'
   spec.name                  = 'ruby-shadow'
-  spec.required_ruby_version = ['>= 1.8', '< 2.0.0']
+  spec.required_ruby_version = ['>= 1.8']
   spec.summary               = '*nix Shadow Password Module'
-  spec.version               = '2.1.5'
+  spec.version               = '2.2.0'
   spec.license  = "Public Domain License"
 end

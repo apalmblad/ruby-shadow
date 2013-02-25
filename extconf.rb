@@ -6,7 +6,11 @@
 
 require 'mkmf'
 
-$CFLAGS = RUBY_VERSION =~ /1\.9/ ? '-DRUBY19' : ''
+$CFLAGS = case RUBY_VERSION
+          when /^1\.9/; '-DRUBY19'
+          when /^2\./; '-DRUBY19'
+          else; ''
+          end
 
 #$LDFLAGS = "-lshadow"
 

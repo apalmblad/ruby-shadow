@@ -1,8 +1,10 @@
-depend
 extconf.rb
 HISTORY
 MANIFEST
 README
 README.euc
 ruby-shadow.gemspec
-shadow.c
+pwd/shadow.c
+pwd/depend
+shadow/shadow.c
+shadow/depend

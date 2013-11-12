@@ -5,16 +5,20 @@ Modified at: <1999/8/19 06:47:14 by ttate>
 License: See LICENSE
 
 
+
 1. What's this
 
-This is the module which used when you access linux shadow password files.  
+This module provides tools to read, and, on Linux, append, information related to password files.
 
-Recent versions work on both Linux and Solaris.
+Recent versions work on both Linux, Solaris, OS X and FreeBSD.
+The functions found are translated to their equivalents in libshadow.
+
+Note 
 
 2. install
 
 ruby extconf.rb
-make
+make # use gmake on FreeBSD
 (make install)
 
 * Note:
@@ -22,20 +26,19 @@ make
  still present, but no promises about earlier versions of Ruby.
 
 3. Shadow::Passwd module's methods
-
-getspent
-getspnam(name)
-setspent
-endspent
-fgetspent(file)
-sgetspent(str)
-putspent(entry,file)
-lckpwdf,lock
-ulckpwdf,unlock
-lock?
-
-* Note: sgetspent is not available under Solaris and some other operating
-  systems.  In current versions, that method will be completely missing.
+____________________________________________________________
+ Method                 | Linux | Solaris | OS X  | FreeBSD
+____________________________________________________________
+ getspent               |   *   |    *    |   *   |    *
+ getspnam(name)         |   *   |    *    |   *   |    *
+ setspent               |   *   |    *    |   *   |    *
+ endspent               |   *   |    *    |   *   |    *
+ fgetspent(file)        |   *   |    *    |   N   |    N
+ sgetspent(str)         |   *   |    N    |   *   |    *
+ putspent(entry,file)   |   *   |    *    |   N   |    N
+ lckpwdf,lock           |   *   |    *    |   N   |    N
+ ulckpwdf,unlock        |   *   |    *    |   N   |    N
+ lock?                  |   *   |    *    |   N   |    N
 
 
 4. Structure
@@ -43,15 +46,16 @@ lock?
 Shadow::Passwd::Entry (Struct::PasswdEntry)
        sp_namp - pointer to null-terminated user name.
        sp_pwdp - pointer to null-terminated password.
-       sp_lstchg  -  days  since  Jan  1,  1970 password was last
-                     changed.
+       sp_lstchg - days  since  Jan  1,  1970 password was last
+                   changed.
        sp_min - days before which password may not be changed.
        sp_max - days after which password must be changed.
        sp_warn - days before password is to expire that  user  is
-       warned of pending password expiration.
+                 warned of pending password expiration.
        sp_inact  -  days  after  password expires that account is
                     considered inactive and disabled.
        sp_expire - days since Jan 1, 1970 when  account  will  be
+                   disabled
 
 
 5. Description

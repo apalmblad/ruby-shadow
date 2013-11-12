@@ -5,6 +5,7 @@
 #
 
 require 'mkmf'
+require 'rbconfig'
 
 $CFLAGS = case RUBY_VERSION
           when /^1\.9/; '-DRUBY19'
@@ -12,33 +13,54 @@ $CFLAGS = case RUBY_VERSION
           else; ''
           end
 
-#$LDFLAGS = "-lshadow"
+implementation = case CONFIG['host_os']
+                 when /linux/i; 'shadow'
+                 when /sunos|solaris/i; 'shadow'
+                 when /freebsd/i; 'pwd'
+                 when /darwin/i; 'pwd'
+                 else; nil
+                   "This library works on OS X, FreeBSD, Solaris and Linux."
+                 end
 
-if( ! (ok = have_library("shadow","getspent")) )
-  $LDFLAGS = ""
-  ok = have_func("getspent")
+ok = true
+
+case implementation
+when 'shadow'
+  #$LDFLAGS = "-lshadow"
+
+  if( ! (ok &= have_library("shadow","getspent")) )
+    $LDFLAGS = ""
+    ok = have_func("getspent")
+  end
+
+  ok &= have_func("fgetspent")
+  ok &= have_func("setspent")
+  ok &= have_func("endspent")
+  ok &= have_func("lckpwdf")
+  ok &= have_func("ulckpwdf")
+
+  if ok
+    if !have_func("sgetspent")
+      $CFLAGS += ' -DSOLARIS'
+    end
+  end
+when 'pwd'
+  ok &= have_func("endpwent")
+  ok &= have_func("getpwent")
+  ok &= have_func("getpwnam")
+  ok &= have_func("getpwnam_r")
+  ok &= have_func("getpwuid")
+  ok &= have_func("setpassent")
+  ok &= have_func("setpwent")
+
+  have_header("uuid/uuid.h")
+  have_header("uuid.h")
+else
+  ok = false
 end
 
-ok &= have_func("fgetspent")
-ok &= have_func("setspent")
-ok &= have_func("endspent")
-ok &= have_func("lckpwdf")
-ok &= have_func("ulckpwdf")
-
 if ok
-  if !have_func("sgetspent")
-    $CFLAGS += ' -DSOLARIS'
-  end
-  create_makefile("shadow")
+  create_makefile("shadow", implementation)
 else
-  osx_ok = have_func( "endpwent" )
-  osx_ok &= have_func( "getpwent" )
-  osx_ok &= have_func( "getpwnam" )
-  osx_ok &= have_func( "getpwnam_r" )
-  osx_ok &= have_func( "getpwuid" )
-  osx_ok &= have_func( "setpassent" )
-  osx_ok &= have_func( "setpwent" )
-  if osx_ok
-    raise "It looks like you're on OSX.  There is a branch that might help here: https://github.com/apalmblad/ruby-shadow/tree/osx"
-  end
+  raise "You are missing some of the required functions from either shadow.h on Linux/Solaris, or pwd.h on FreeBSD/OS X."
 end

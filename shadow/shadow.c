@@ -17,7 +17,7 @@
 #endif
 
 #ifdef RUBY19
-#define file_ptr(x) (x)->stdio_file
+#define file_ptr(x) rb_io_stdio_file(x)
 #else
 #define file_ptr(x) (x)->f
 #endif
@@ -62,16 +62,17 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
     return Qnil;
 
   result = rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
+           rb_tainted_str_new2(entry->sp_namp),
+           rb_tainted_str_new2(entry->sp_pwdp),
+           INT2FIX(entry->sp_lstchg),
+           INT2FIX(entry->sp_min),
+           INT2FIX(entry->sp_max),
+           INT2FIX(entry->sp_warn),
+           INT2FIX(entry->sp_inact),
+           Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
+           INT2FIX(entry->sp_expire),
+           INT2FIX(entry->sp_flag),
+           NULL);
   free(entry);
   return result;
 };
@@ -82,26 +83,28 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
 {
   struct spwd *entry;
   VALUE result;
+  FILE* cfile;
 
   if( TYPE(file) != T_FILE )
     rb_raise(rb_eTypeError,"argument must be a File.");
-
-  entry = fgetspent( file_ptr( (RFILE(file)->fptr) ) );
+  cfile = file_ptr(RFILE(file)->fptr);
+  entry = fgetspent(cfile);
 
   if( entry == NULL )
     return Qnil;
 
   result = rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
+           rb_tainted_str_new2(entry->sp_namp),
+           rb_tainted_str_new2(entry->sp_pwdp),
+           INT2FIX(entry->sp_lstchg),
+           INT2FIX(entry->sp_min),
+           INT2FIX(entry->sp_max),
+           INT2FIX(entry->sp_warn),
+           INT2FIX(entry->sp_inact),
+           Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
+           INT2FIX(entry->sp_expire),
+           INT2FIX(entry->sp_flag),
+           NULL);
   return result;
 };
 
@@ -117,16 +120,17 @@ rb_shadow_getspent(VALUE self)
     return Qnil;
 
   result = rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
+           rb_tainted_str_new2(entry->sp_namp),
+           rb_tainted_str_new2(entry->sp_pwdp),
+           INT2FIX(entry->sp_lstchg),
+           INT2FIX(entry->sp_min),
+           INT2FIX(entry->sp_max),
+           INT2FIX(entry->sp_warn),
+           INT2FIX(entry->sp_inact),
+           Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
+           INT2FIX(entry->sp_expire),
+           INT2FIX(entry->sp_flag),
+           NULL);
   return result;
 };
 
@@ -145,16 +149,17 @@ rb_shadow_getspnam(VALUE self, VALUE name)
     return Qnil;
 
   result = rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
+           rb_tainted_str_new2(entry->sp_namp),
+           rb_tainted_str_new2(entry->sp_pwdp),
+           INT2FIX(entry->sp_lstchg),
+           INT2FIX(entry->sp_min),
+           INT2FIX(entry->sp_max),
+           INT2FIX(entry->sp_warn),
+           INT2FIX(entry->sp_inact),
+           Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
+           INT2FIX(entry->sp_expire),
+           INT2FIX(entry->sp_flag),
+           NULL);
   return result;
 };
 
@@ -164,13 +169,16 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
 {
   struct spwd centry;
   FILE* cfile;
-  VALUE val[9];
+  VALUE val[10];
   int i;
   int result;
 
-  for(i=0; i<=8; i++)
+  if( TYPE(file) != T_FILE )
+    rb_raise(rb_eTypeError,"argument must be a File.");
+
+  for(i=0; i<=9; i++)
     val[i] = RSTRUCT_PTR( entry )[i]; //val[i] = RSTRUCT(entry)->ptr[i];
-  cfile = file_ptr( RFILE(file)->fptr );
+  cfile = file_ptr(RFILE(file)->fptr);
 
   centry.sp_namp = StringValuePtr(val[0]);
   centry.sp_pwdp = StringValuePtr(val[1]);
@@ -179,8 +187,8 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
   centry.sp_max = FIX2INT(val[4]);
   centry.sp_warn = FIX2INT(val[5]);
   centry.sp_inact = FIX2INT(val[6]);
-  centry.sp_expire = FIX2INT(val[7]);
-  centry.sp_flag = FIX2INT(val[8]);
+  centry.sp_expire = FIX2INT(val[8]);
+  centry.sp_flag = FIX2INT(val[9]);
 
   result = putspent(&centry,cfile);
 
@@ -264,12 +272,13 @@ void
 Init_shadow()
 {
   rb_sPasswdEntry = rb_struct_define("PasswdEntry",
-				     "sp_namp","sp_pwdp","sp_lstchg",
-				     "sp_min","sp_max","sp_warn",
-				     "sp_inact","sp_expire","sp_flag", NULL);
+            "sp_namp","sp_pwdp","sp_lstchg",
+            "sp_min","sp_max","sp_warn",
+            "sp_inact","pw_change",
+            "sp_expire","sp_flag", NULL);
   rb_sGroupEntry = rb_struct_define("GroupEntry",
-				    "sg_name","sg_passwd",
-				    "sg_adm","sg_mem",NULL);
+            "sg_name","sg_passwd",
+            "sg_adm","sg_mem",NULL);
 
   rb_mShadow = rb_define_module("Shadow");
   rb_eFileLock = rb_define_class_under(rb_mShadow,"FileLock",rb_eException);

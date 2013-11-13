@@ -17,7 +17,7 @@
 #endif
 
 #ifdef RUBY19
-#define file_ptr(x) (x)->stdio_file
+#define file_ptr(x) rb_io_stdio_file(x)
 #else
 #define file_ptr(x) (x)->f
 #endif

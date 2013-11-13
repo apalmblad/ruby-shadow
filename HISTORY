@@ -1,4 +1,8 @@
 [2013/11/13]
+* Version 2.3.1
+ - Caleb Land<caleb.land@gmail.com>
+ Remove sgetspent on implementations using pwd.h
+[2013/11/13]
 * Version 2.3.0
  - Caleb Land<caleb.land@gmail.com>
  Merge OS X work into main gem.  Fix bugs with OS X implementation and tweak support for FreeBSD.

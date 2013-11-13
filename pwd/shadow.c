@@ -69,26 +69,6 @@ static VALUE convert_pw_struct( struct passwd *entry )
 }
 
 static VALUE
-rb_shadow_sgetspent(VALUE self, VALUE str)
-{
-  PWTYPE *entry;
-  VALUE result;
-
-  if( TYPE(str) != T_STRING )
-    rb_raise(rb_eException, "argument must be a string.");
-
-  entry = getpwnam(StringValuePtr(str));
-
-  if( entry == NULL )
-    return Qnil;
-
-  result = convert_pw_struct( entry );
-
-  free(entry);
-  return result;
-}
-
-static VALUE
 rb_shadow_getspent(VALUE self)
 {
   PWTYPE *entry;
@@ -140,7 +120,6 @@ Init_shadow()
 
   rb_define_module_function(rb_mPasswd,"setspent",rb_shadow_setspent,0);
   rb_define_module_function(rb_mPasswd,"endspent",rb_shadow_endspent,0);
-  rb_define_module_function(rb_mPasswd,"sgetspent",rb_shadow_sgetspent,1);
   rb_define_module_function(rb_mPasswd,"getspent",rb_shadow_getspent,0);
   rb_define_module_function(rb_mPasswd,"getspnam",rb_shadow_getspnam,1);
 }

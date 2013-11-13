@@ -34,7 +34,7 @@ ____________________________________________________________
  setspent               |   *   |    *    |   *   |    *
  endspent               |   *   |    *    |   *   |    *
  fgetspent(file)        |   *   |    *    |   N   |    N
- sgetspent(str)         |   *   |    N    |   *   |    *
+ sgetspent(str)         |   *   |    N    |   N   |    N
  putspent(entry,file)   |   *   |    *    |   N   |    N
  lckpwdf,lock           |   *   |    *    |   N   |    N
  ulckpwdf,unlock        |   *   |    *    |   N   |    N

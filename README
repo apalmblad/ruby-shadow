@@ -9,19 +9,19 @@ License: Free for any use with your own risk!
 
 This module provides tools to read, and, on Linux, append, information related to password files.
 
-Recent versions work on both Linux and Solaris.
-the functions found are translated to their equivalents in libshadow.
+Recent versions work on both Linux, Solaris, OS X and FreeBSD
+The functions found are translated to their equivalents in libshadow.
 
 Note 
 
 2. install
 
 ruby extconf.rb
-make
+make # use gmake on FreeBSD
 (make install)
 
 * Note:
- Version 2 was developed to compile on Ruby 1.9.  1.8 compatibility should be
+ Version 2 was developed to compile on Ruby 1.9. 1.8 compatibility should be
  still present, but no promises about earlier versions of Ruby.
 
 3. Shadow::Passwd module's methods

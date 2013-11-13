@@ -3,3 +3,4 @@ mkmf.log
 ruby-shadow-*.gem
 shadow.o
 shadow.so
+shadow.bundle

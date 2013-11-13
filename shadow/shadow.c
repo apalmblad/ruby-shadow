@@ -5,7 +5,6 @@
  *
  * Copyright (C) 1998-1999 by Takaaki.Tateishi(ttate@jaist.ac.jp)
  * License: Free for any use with your own risk!
- * Modified at: <1999/8/19 06:48:18 by ttate>
  */
 
 #include <shadow.h>
@@ -21,6 +20,8 @@
 #else
 #define file_ptr(x) (x)->f
 #endif
+
+#define NUM_FIELDS 10
 
 static VALUE rb_mShadow;
 static VALUE rb_mPasswd;
@@ -69,6 +70,7 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
+                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -85,7 +87,6 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
 
   if( TYPE(file) != T_FILE )
     rb_raise(rb_eTypeError,"argument must be a File.");
-
   entry = fgetspent( file_ptr( (RFILE(file)->fptr) ) );
 
   if( entry == NULL )
@@ -99,6 +100,7 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
+                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -124,6 +126,7 @@ rb_shadow_getspent(VALUE self)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
+		      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -152,6 +155,7 @@ rb_shadow_getspnam(VALUE self, VALUE name)
 		      INT2FIX(entry->sp_max),
 		      INT2FIX(entry->sp_warn),
 		      INT2FIX(entry->sp_inact),
+                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
@@ -164,13 +168,17 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
 {
   struct spwd centry;
   FILE* cfile;
-  VALUE val[9];
+  VALUE val[NUM_FIELDS];
   int i;
   int result;
 
-  for(i=0; i<=8; i++)
+  if( TYPE(file) != T_FILE )
+    rb_raise(rb_eTypeError,"argument must be a File.");
+
+  for(i=0; i<NUM_FIELDS; i++)
     val[i] = RSTRUCT_PTR( entry )[i]; //val[i] = RSTRUCT(entry)->ptr[i];
   cfile = file_ptr( RFILE(file)->fptr );
+
 
   centry.sp_namp = StringValuePtr(val[0]);
   centry.sp_pwdp = StringValuePtr(val[1]);
@@ -179,8 +187,8 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
   centry.sp_max = FIX2INT(val[4]);
   centry.sp_warn = FIX2INT(val[5]);
   centry.sp_inact = FIX2INT(val[6]);
-  centry.sp_expire = FIX2INT(val[7]);
-  centry.sp_flag = FIX2INT(val[8]);
+  centry.sp_expire = FIX2INT(val[8]);
+  centry.sp_flag = FIX2INT(val[9]);
 
   result = putspent(&centry,cfile);
 

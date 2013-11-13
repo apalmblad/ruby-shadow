@@ -1,3 +1,13 @@
+[2013/11/13]
+* Version 2.3.0
+ - Caleb Land<caleb.land@gmail.com>
+ Merge OS X work into main gem.  Fix bugs with OS X implementation and tweak support for FreeBSD.
+ See https://github.com/caleb/ruby-shadow/commit/20d98b7d9e3bbbef0b737affd3245590096a316c
+ - Add license file to Manifest.
+[2013/02/25]
+ - Adam Palmblad<apalmblad@gmail.com>
+ Fix compilation issues with ruby 2.
+
 [2012/04/17]
 * Version 2.1.4
  - MATSUU Takuto <matsuu@gentoo.org>

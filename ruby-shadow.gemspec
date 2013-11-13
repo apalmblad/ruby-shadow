@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
                                 'Remi Broemeling',
                                 'Takaaki Tateishi']
 
-  spec.description           = 'This module provides access to shadow passwords on Linux and Solaris'
+  spec.description           = 'This module provides access to shadow passwords on Linux, OSX, FreeBSD, and Solaris'
   spec.email                 = ['adam.palmblad@teampages.com']
   spec.extensions            = ['extconf.rb']
   spec.files                 = []
@@ -19,6 +19,6 @@ Gem::Specification.new do |spec|
   spec.name                  = 'ruby-shadow'
   spec.required_ruby_version = ['>= 1.8']
   spec.summary               = '*nix Shadow Password Module'
-  spec.version               = '2.2.0'
+  spec.version               = '2.3.0'
   spec.license  = "Public Domain License"
 end

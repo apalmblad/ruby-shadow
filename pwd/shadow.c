@@ -17,8 +17,8 @@
 #define PWTYPE  struct passwd
 
 #include "ruby.h"
-#ifdef RUBY19
-#include <ruby/io.h>
+#ifdef HAVE_RUBY_IO_H
+#include "ruby/io.h"
 #else
 #include "rubyio.h"
 #endif

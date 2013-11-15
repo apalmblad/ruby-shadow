@@ -59,7 +59,10 @@ else
   ok = false
 end
 
+have_header( "ruby/io.h")
+
 if ok
+
   create_makefile("shadow", implementation)
 else
   raise "You are missing some of the required functions from either shadow.h on Linux/Solaris, or pwd.h on FreeBSD/OS X."

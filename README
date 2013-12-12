@@ -10,7 +10,7 @@ License: See LICENSE
 
 This module provides tools to read, and, on Linux, append, information related to password files.
 
-Recent versions work on both Linux, Solaris, OS X and FreeBSD.
+Recent versions work on both Linux, Solaris, OS X, FreeBSD and OpenBSD.
 The functions found are translated to their equivalents in libshadow.
 
 Note 
@@ -26,19 +26,19 @@ make # use gmake on FreeBSD
  still present, but no promises about earlier versions of Ruby.
 
 3. Shadow::Passwd module's methods
-____________________________________________________________
- Method                 | Linux | Solaris | OS X  | FreeBSD
-____________________________________________________________
- getspent               |   *   |    *    |   *   |    *
- getspnam(name)         |   *   |    *    |   *   |    *
- setspent               |   *   |    *    |   *   |    *
- endspent               |   *   |    *    |   *   |    *
- fgetspent(file)        |   *   |    *    |   N   |    N
- sgetspent(str)         |   *   |    N    |   N   |    N
- putspent(entry,file)   |   *   |    *    |   N   |    N
- lckpwdf,lock           |   *   |    *    |   N   |    N
- ulckpwdf,unlock        |   *   |    *    |   N   |    N
- lock?                  |   *   |    *    |   N   |    N
+______________________________________________________________________
+ Method                 | Linux | Solaris | OS X  | FreeBSD | OpenBSD
+______________________________________________________________________
+ getspent               |   *   |    *    |   *   |    *    |    *
+ getspnam(name)         |   *   |    *    |   *   |    *    |    *
+ setspent               |   *   |    *    |   *   |    *    |    *
+ endspent               |   *   |    *    |   *   |    *    |    *
+ fgetspent(file)        |   *   |    *    |   N   |    N    |    N
+ sgetspent(str)         |   *   |    N    |   N   |    N    |    N
+ putspent(entry,file)   |   *   |    *    |   N   |    N    |    N
+ lckpwdf,lock           |   *   |    *    |   N   |    N    |    N
+ ulckpwdf,unlock        |   *   |    *    |   N   |    N    |    N
+ lock?                  |   *   |    *    |   N   |    N    |    N
 
 
 4. Structure

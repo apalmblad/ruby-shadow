@@ -1,3 +1,6 @@
+[2013/12/18]
+* Version 2.3.2
+ Fix up compilation issues causing problems with a non-GNU make.
 [2013/11/13]
 * Version 2.3.1
  - Caleb Land<caleb.land@gmail.com>

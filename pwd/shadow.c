@@ -1,7 +1,7 @@
 /*
  * shadow.c
  *
- * Ruby extention module for using FreeBSD/OS X pwd.h.
+ * Ruby extention module for using FreeBSD/OpenBSD/OS X pwd.h.
  *
  * Copyright (C) 1998-1999 by Takaaki.Tateishi(ttate@jaist.ac.jp)
  * License: Free for any use with your own risk!

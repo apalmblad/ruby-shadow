@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
                                 'Remi Broemeling',
                                 'Takaaki Tateishi']
 
-  spec.description           = 'This module provides access to shadow passwords on Linux, OSX, FreeBSD, and Solaris'
+  spec.description           = 'This module provides access to shadow passwords on Linux, OSX, FreeBSD, OpenBSD, and Solaris'
   spec.email                 = ['adam.palmblad@teampages.com']
   spec.extensions            = ['extconf.rb']
   spec.files                 = []

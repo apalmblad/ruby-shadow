@@ -62,18 +62,7 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
   if( entry == NULL )
     return Qnil;
 
-  result = rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
+  result = rb_shadow_entry_to_struct( entry );
   free(entry);
   return result;
 };
@@ -92,18 +81,7 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
   if( entry == NULL )
     return Qnil;
 
-  result = rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
+  result = rb_shadow_entry_to_struct( entry );
   return result;
 };
 
@@ -118,19 +96,7 @@ rb_shadow_getspent(VALUE self)
   if( entry == NULL )
     return Qnil;
 
-  result = rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-		      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
-  return result;
+  return rb_shadow_entry_to_struct( entry );
 };
 
 static VALUE
@@ -146,8 +112,12 @@ rb_shadow_getspnam(VALUE self, VALUE name)
 
   if( entry == NULL )
     return Qnil;
+  return rb_shadow_entry_to_struct( entry );
+};
 
-  result = rb_struct_new(rb_sPasswdEntry,
+static VALUE rb_shadow_entry_to_struct( struct spwd *entry ) 
+{
+  return rb_struct_new(rb_sPasswdEntry,
 		      rb_tainted_str_new2(entry->sp_namp),
 		      rb_tainted_str_new2(entry->sp_pwdp),
 		      INT2FIX(entry->sp_lstchg),
@@ -159,7 +129,6 @@ rb_shadow_getspnam(VALUE self, VALUE name)
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
 		      NULL);
-  return result;
 };
 
 

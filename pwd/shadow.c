@@ -54,16 +54,17 @@ rb_shadow_endspent(VALUE self)
 
 static VALUE convert_pw_struct( struct passwd *entry )
 {
+  /* Hmm. Why custom pw_change instead of sp_lstchg? */
   return rb_struct_new(rb_sPasswdEntry,
-         rb_tainted_str_new2(entry->pw_name),
-         rb_tainted_str_new2(entry->pw_passwd),
-         Qnil, /* date when the password was last changed (in days since Jan 1, 1970) */
-         Qnil, /* days that password must stay same */
-         Qnil, /* days until password changes. */
-         Qnil, /* days before expiration where user is warned */
-         Qnil, /* days after password expiration that account becomes inactive */
-            INT2FIX(difftime(entry->pw_change, 0) / (24*60*60)),
-            INT2FIX(difftime(entry->pw_expire, 0) / (24*60*60)),
+         rb_tainted_str_new2(entry->pw_name), /* sp_namp */
+         rb_tainted_str_new2(entry->pw_passwd), /* sp_pwdp, encryped password */
+         Qnil, /* sp_lstchg, date when the password was last changed (in days since Jan 1, 1970) */
+         Qnil, /* sp_min, days that password must stay same */
+         Qnil, /* sp_max, days until password changes. */
+         Qnil, /* sp_warn, days before expiration where user is warned */
+         Qnil, /* sp_inact, days after password expiration that account becomes inactive */
+         INT2FIX(difftime(entry->pw_change, 0) / (24*60*60)), /* pw_change */
+         INT2FIX(difftime(entry->pw_expire, 0) / (24*60*60)), /* sp_expire */
          Qnil, /* sp_flag */
          NULL);
 }

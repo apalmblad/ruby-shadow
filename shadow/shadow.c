@@ -62,7 +62,7 @@ rb_shadow_sgetspent(VALUE self, VALUE str)
   if( entry == NULL )
     return Qnil;
 
-  result = rb_shadow_entry_to_struct( entry );
+  result = convert_pw_struct( entry );
   free(entry);
   return result;
 };
@@ -81,7 +81,7 @@ rb_shadow_fgetspent(VALUE self, VALUE file)
   if( entry == NULL )
     return Qnil;
 
-  result = rb_shadow_entry_to_struct( entry );
+  result = convert_pw_struct( entry );
   return result;
 };
 
@@ -96,7 +96,7 @@ rb_shadow_getspent(VALUE self)
   if( entry == NULL )
     return Qnil;
 
-  return rb_shadow_entry_to_struct( entry );
+  return convert_pw_struct( entry );
 };
 
 static VALUE
@@ -112,10 +112,10 @@ rb_shadow_getspnam(VALUE self, VALUE name)
 
   if( entry == NULL )
     return Qnil;
-  return rb_shadow_entry_to_struct( entry );
+  return convert_pw_struct( entry );
 };
 
-static VALUE rb_shadow_entry_to_struct( struct spwd *entry ) 
+static VALUE convert_pw_struct( struct spwd *entry ) 
 {
   return rb_struct_new(rb_sPasswdEntry,
 		      rb_tainted_str_new2(entry->sp_namp),

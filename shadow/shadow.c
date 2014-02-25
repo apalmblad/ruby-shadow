@@ -243,7 +243,7 @@ Init_shadow()
   rb_sPasswdEntry = rb_struct_define("PasswdEntry",
 				     "sp_namp","sp_pwdp","sp_lstchg",
 				     "sp_min","sp_max","sp_warn",
-				     "sp_inact","sp_expire","sp_flag", NULL);
+				     "sp_inact", "pw_change", "sp_expire","sp_flag", NULL);
   rb_sGroupEntry = rb_struct_define("GroupEntry",
 				    "sg_name","sg_passwd",
 				    "sg_adm","sg_mem",NULL);

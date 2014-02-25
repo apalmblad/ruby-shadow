@@ -31,6 +31,21 @@ static VALUE rb_sGroupEntry;
 static VALUE rb_eFileLock;
 
 
+static VALUE convert_pw_struct( struct spwd *entry ) 
+{
+  return rb_struct_new(rb_sPasswdEntry,
+		      rb_tainted_str_new2(entry->sp_namp),
+		      rb_tainted_str_new2(entry->sp_pwdp),
+		      INT2FIX(entry->sp_lstchg),
+		      INT2FIX(entry->sp_min),
+		      INT2FIX(entry->sp_max),
+		      INT2FIX(entry->sp_warn),
+		      INT2FIX(entry->sp_inact),
+                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
+		      INT2FIX(entry->sp_expire),
+		      INT2FIX(entry->sp_flag),
+		      NULL);
+};
 static VALUE
 rb_shadow_setspent(VALUE self)
 {
@@ -115,21 +130,6 @@ rb_shadow_getspnam(VALUE self, VALUE name)
   return convert_pw_struct( entry );
 };
 
-static VALUE convert_pw_struct( struct spwd *entry ) 
-{
-  return rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
-		      INT2FIX(entry->sp_lstchg),
-		      INT2FIX(entry->sp_min),
-		      INT2FIX(entry->sp_max),
-		      INT2FIX(entry->sp_warn),
-		      INT2FIX(entry->sp_inact),
-                      Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
-		      INT2FIX(entry->sp_expire),
-		      INT2FIX(entry->sp_flag),
-		      NULL);
-};
 
 
 static VALUE

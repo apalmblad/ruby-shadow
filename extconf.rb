@@ -16,10 +16,10 @@ $CFLAGS = case RUBY_VERSION
 implementation = case CONFIG['host_os']
                  when /linux/i; 'shadow'
                  when /sunos|solaris/i; 'shadow'
-                 when /freebsd|openbsd/i; 'pwd'
+                 when /freebsd|mirbsd|netbsd|openbsd/i; 'pwd'
                  when /darwin/i; 'pwd'
                  else; nil
-                   "This library works on OS X, FreeBSD, OpenBSD, Solaris and Linux."
+                   "This library works on OS X, FreeBSD, MirBSD, NetBSD, OpenBSD, Solaris and Linux."
                  end
 
 ok = true
@@ -65,5 +65,5 @@ if ok
 
   create_makefile("shadow", implementation)
 else
-  raise "You are missing some of the required functions from either shadow.h on Linux/Solaris, or pwd.h on FreeBSD/OpenBSD/OS X."
+  raise "You are missing some of the required functions from either shadow.h on Linux/Solaris, or pwd.h on FreeBSD/MirBSD/NetBSD/OpenBSD/OS X."
 end

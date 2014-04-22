@@ -48,7 +48,6 @@ when 'pwd'
   ok &= have_func("endpwent")
   ok &= have_func("getpwent")
   ok &= have_func("getpwnam")
-  ok &= have_func("getpwnam_r")
   ok &= have_func("getpwuid")
   ok &= have_func("setpassent")
   ok &= have_func("setpwent")

@@ -1,3 +1,6 @@
+[2014/04/28]
+  * Added support for more BSDs, thanks to https://github.com/bsiegert.
+  * Simplified compatibility check, removing check for function not actually used in pwd.h implementations.
 [2014/02/25]
 [2013/12/18]
 * Version 2.3.3

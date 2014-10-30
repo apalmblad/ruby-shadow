@@ -66,6 +66,7 @@ static VALUE convert_pw_struct( struct passwd *entry )
          INT2FIX(difftime(entry->pw_change, 0) / (24*60*60)), /* pw_change */
          INT2FIX(difftime(entry->pw_expire, 0) / (24*60*60)), /* sp_expire */
          Qnil, /* sp_flag */
+         rb_tainted_str_new2(entry->pw_class), /* sp_loginclass, user access class */
          NULL);
 }
 
@@ -107,7 +108,8 @@ Init_shadow()
                                      "sp_namp","sp_pwdp","sp_lstchg",
                                      "sp_min","sp_max","sp_warn",
                                      "sp_inact","pw_change",
-                                     "sp_expire","sp_flag", NULL);
+                                     "sp_expire","sp_flag",
+                                     "sp_loginclass", NULL);
   rb_sGroupEntry = rb_struct_define("GroupEntry",
                                     "sg_name","sg_passwd",
                                     "sg_adm","sg_mem",NULL);

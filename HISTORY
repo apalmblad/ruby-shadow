@@ -1,3 +1,6 @@
+[2014/12/02]
+* Version 2.4.1
+  - sp_loginclass support should NOT have been added to password implementation
 [2014/12/01]
 * Version 2.4.0
   - Add support for sp_loginclass via pwd.h

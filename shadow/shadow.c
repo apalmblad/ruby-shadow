@@ -44,7 +44,7 @@ static VALUE convert_pw_struct( struct spwd *entry )
                       Qnil, /* used by BSD, pw_change, date when the password expires, in days since Jan 1, 1970 */
 		      INT2FIX(entry->sp_expire),
 		      INT2FIX(entry->sp_flag),
-		      rb_tainted_str_new2(entry->pw_class),
+		      Qnil,
 		      NULL);
 };
 static VALUE
@@ -159,7 +159,6 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
   centry.sp_inact = FIX2INT(val[6]);
   centry.sp_expire = FIX2INT(val[8]);
   centry.sp_flag = FIX2INT(val[9]);
-  centry.sp_loginclass = StringValuePtr(val[10]);
 
   result = putspent(&centry,cfile);
 

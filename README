@@ -83,7 +83,7 @@ when you exit the iterator block.
 
 * man shadow
 * /usr/include/shadow.h
-* Code at https://github.com/shadow-maint/shadow
+* Code at https://github.com/apalmblad/ruby-shadow
 
 
 Original Author:

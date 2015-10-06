@@ -146,7 +146,7 @@ rb_shadow_putspent(VALUE self, VALUE entry, VALUE file)
     rb_raise(rb_eTypeError,"argument must be a File.");
 
   for(i=0; i<NUM_FIELDS; i++)
-    val[i] = RSTRUCT_PTR( entry )[i]; //val[i] = RSTRUCT(entry)->ptr[i];
+    val[i] = rb_ary_entry(entry, i); //val[i] = RSTRUCT(entry)->ptr[i];
   cfile = file_ptr( RFILE(file)->fptr );
 
 

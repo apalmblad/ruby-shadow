@@ -126,4 +126,5 @@ Init_shadow()
   rb_define_module_function(rb_mPasswd,"endspent",rb_shadow_endspent,0);
   rb_define_module_function(rb_mPasswd,"getspent",rb_shadow_getspent,0);
   rb_define_module_function(rb_mPasswd,"getspnam",rb_shadow_getspnam,1);
+  rb_define_module_function(rb_mPasswd,"from_user_name",rb_shadow_getspnam,1);
 }

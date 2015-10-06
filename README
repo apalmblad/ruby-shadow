@@ -31,15 +31,18 @@ _________________________________________________________
 _________________________________________________________
  getspent               |   *   |    *    |   *   |   *
  getspnam(name)         |   *   |    *    |   *   |   *
+ from_user_name(name) (alias of above) |   *   |    *    |   *   |   *
  setspent               |   *   |    *    |   *   |   *
  endspent               |   *   |    *    |   *   |   *
  fgetspent(file)        |   *   |    *    |   N   |   N
  sgetspent(str)         |   *   |    N    |   N   |   N
  putspent(entry,file)   |   *   |    *    |   N   |   N
+ add_password_entry (alias of above ) |   *   |    *    |   N   |   N
  lckpwdf,lock           |   *   |    *    |   N   |   N
  ulckpwdf,unlock        |   *   |    *    |   N   |   N
  lock?                  |   *   |    *    |   N   |   N
 
+Check the implementation in use via Shadow::IMPLEMENTATION.
 
 4. Structure
 

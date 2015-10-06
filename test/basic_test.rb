@@ -21,13 +21,24 @@ class RubyShadowTest < Test::Unit::TestCase
   # -------------------------------------------------------------- test_putspent
   def test_putspent
     omit_if( Shadow::IMPLEMENTATION != 'SHADOW' )
-    Shadow::Passwd.putspent
+    result = StringIO.open( '', 'w' ) do |fh|
+      Shadow::Passwd.add_password_entry( sample_entry, fh )
+    end
+    raise result.inspect
   end
   # --------------------------------------------------------------- check_struct
   def check_struct( s )
     STRUCT_METHODS.each do |m|
       s.send( m )
     end
+  end
+  # ----------------------------------------------------------------- test_entry
+  def sample_entry( &block )
+    e = Shadow::Passwd::Entry.new
+    e.sp_namp = 'test_user'
+    e.sp_pwdp = 'password'
+    yield e if block_given?
+    return e
   end
 end
 

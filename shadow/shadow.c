@@ -267,7 +267,9 @@ Init_shadow()
   rb_define_module_function(rb_mPasswd,"fgetspent",rb_shadow_fgetspent,1);
   rb_define_module_function(rb_mPasswd,"getspent",rb_shadow_getspent,0);
   rb_define_module_function(rb_mPasswd,"getspnam",rb_shadow_getspnam,1);
+  rb_define_module_function(rb_mPasswd,"from_user_name",rb_shadow_getspnam,1);
   rb_define_module_function(rb_mPasswd,"putspent",rb_shadow_putspent,2);
+  rb_define_module_function(rb_mPasswd,"add_password_entry",rb_shadow_putspent,2);
   rb_define_module_function(rb_mPasswd,"lckpwdf",rb_shadow_lckpwdf,0);
   rb_define_module_function(rb_mPasswd,"lock",rb_shadow_lock,0);
   rb_define_module_function(rb_mPasswd,"ulckpwdf",rb_shadow_ulckpwdf,0);

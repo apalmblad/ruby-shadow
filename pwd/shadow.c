@@ -115,6 +115,7 @@ Init_shadow()
                                     "sg_adm","sg_mem",NULL);
 
   rb_mShadow = rb_define_module("Shadow");
+  rb_define_const( rb_mShadow, "IMPLEMENTATION", rb_str_new_cstr( "PWD" ) );
   rb_eFileLock = rb_define_class_under(rb_mShadow,"FileLock",rb_eException);
   rb_mPasswd = rb_define_module_under(rb_mShadow,"Passwd");
   rb_define_const(rb_mPasswd,"Entry",rb_sPasswdEntry);

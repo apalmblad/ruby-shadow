@@ -10,6 +10,7 @@ require 'rbconfig'
 $CFLAGS = case RUBY_VERSION
           when /^1\.9/; '-DRUBY19'
           when /^2\./; '-DRUBY19'
+          when /^3\./; '-DRUBY19'
           else; ''
           end
 

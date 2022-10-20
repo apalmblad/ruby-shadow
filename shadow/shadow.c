@@ -34,8 +34,8 @@ static VALUE rb_eFileLock;
 static VALUE convert_pw_struct( struct spwd *entry ) 
 {
   return rb_struct_new(rb_sPasswdEntry,
-		      rb_tainted_str_new2(entry->sp_namp),
-		      rb_tainted_str_new2(entry->sp_pwdp),
+		      rb_str_new2(entry->sp_namp),
+		      rb_str_new2(entry->sp_pwdp),
 		      INT2FIX(entry->sp_lstchg),
 		      INT2FIX(entry->sp_min),
 		      INT2FIX(entry->sp_max),

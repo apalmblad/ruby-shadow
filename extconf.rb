@@ -14,7 +14,7 @@ $CFLAGS = case RUBY_VERSION
           else; ''
           end
 
-implementation = case CONFIG['host_os']
+implementation = case RbConfig::CONFIG['host_os']
                  when /linux/i; 'shadow'
                  when /sunos|solaris/i; 'shadow'
                  when /freebsd|mirbsd|netbsd|openbsd/i; 'pwd'
